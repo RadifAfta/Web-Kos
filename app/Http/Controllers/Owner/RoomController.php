@@ -50,28 +50,80 @@ class RoomController extends Controller
     }
 
     public function edit(Room $room)
-{
-    return view('auth.owner.room-edit', compact('room'));
-}
+    {
+        return view('auth.owner.updateKamar', compact('room'));
+    }
 
-public function update(Request $request, Room $room)
-{
-    $request->validate([
-        'room_number' => 'required|integer',
-        'facilities' => 'required|string',
-        'description' => 'required|string',
-        'images' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'price' => 'required|integer',
-        'available' => 'required|boolean',
-        'owner_id' => 'required|integer',
-        'kos_id' => 'required|integer',
-    ]);
+    // public function update(Request $request, Room $room)
+    // {
+    //     $request->validate([
+    //         'room_number' => 'required|integer',
+    //         'facilities' => 'required|string',
+    //         'description' => 'required|string',
+    //         'images' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    //         'price' => 'required|integer',
+    //         'available' => 'required|boolean',
+    //         'owner_id' => 'required|integer',
+    //         'kos_id' => 'required|integer',
+    //     ]);
 
-    // Update room data
-    $room->update($request->all());
+    //     // Proses unggah gambar
+    //     if ($request->hasFile('images')) {
+    //         $imageName = time() . '.' . $request->images->extension();
+    //         $request->images->storeAs('images', $imageName, 'public');
+    //     } else {
+    //         $imageName = $room->images;
+    //     }
 
-    return redirect()->route('owner.dashboard')->with('success', 'Room successfully updated.');
-}
+    //     $room->update([
+    //         'room_number' => $request->room_number,
+    //         'facilities' => $request->facilities,
+    //         'description' => $request->description,
+    //         'images' => $imageName,
+    //         'price' => $request->price,
+    //         'available' => $request->available,
+    //         'owner_id' => $request->owner_id,
+    //         'kos_id' => $request->kos_id,
+    //     ]);
 
+    //     return redirect()->route('room.index')->with('success', 'Kamar berhasil diperbarui.');
+    // }
+    public function update(Request $request, Room $room)
+    {
+        $request->validate([
+            'room_number' => 'required|integer',
+            'facilities' => 'required|string',
+            'description' => 'required|string',
+            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'price' => 'required|integer',
+            'available' => 'required|boolean',
+            'owner_id' => 'required|integer',
+            'kos_id' => 'required|integer',
+        ]);
+
+        if ($request->hasFile('images')) {
+            // Hapus gambar lama jika ada
+            if ($room->images) {
+                // Gunakan Storage untuk menghapus gambar dari penyimpanan
+                Storage::delete($room->images);
+            }
+            // Simpan gambar baru ke penyimpanan
+            $room->images = $request->file('images')->store('room_images', 'public');
+        }
+
+        // Update atribut-atribut kos lainnya
+        $room->room_number = $request->room_number;
+        $room->facilities = $request->facilities;
+        $room->description = $request->description;
+        $room->price = $request->price;
+        $room->available = $request->available;
+        $room->owner_id = $request->owner_id;
+        $room->kos_id = $request->kos_id;
+
+        // Simpan perubahan data room$room
+        $room->save();
+
+        return redirect()->route('owner.dashboard')->with('success', 'Kos berhasil diperbarui.');
+    }
 
 }

@@ -52,7 +52,7 @@
                 @endif
                 <!-- Tambahkan kondisi untuk memeriksa apakah variabel $room ada -->
                 @if(isset($room))
-                    <a href="{{ route('room.update', $room->id) }}" class="btn btn-primary">Edit Kamar</a>
+                    <a href="{{ route('room.edit', $room->id) }}" class="btn btn-primary">Edit Kamar</a>
                 @endif
             </div>
         </div>

@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-primary text-white">{{ __('Edit Kamar') }}</div>
+                    <div class="card-header bg-primary text-white">{{ __('Edit Room') }}</div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('room.update', $room->id) }}" enctype="multipart/form-data">
                             @csrf
@@ -60,4 +60,5 @@
                 </div>
             </div>
         </div>
-    </div
+    </div>
+@endsection

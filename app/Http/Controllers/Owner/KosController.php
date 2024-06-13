@@ -79,7 +79,7 @@ class KosController extends Controller
             // Simpan gambar baru ke penyimpanan
             $kos->images = $request->file('images')->store('kos_images', 'public');
         }
-    
+
         // Update atribut-atribut kos lainnya
         $kos->name = $request->name;
         $kos->address = $request->address;
@@ -88,7 +88,7 @@ class KosController extends Controller
         $kos->phone = $request->phone;
         $kos->type = $request->type;
         $kos->description = $request->description;
-    
+
         // Simpan perubahan data kos
         $kos->save();
 

@@ -26,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('kos/store', [KosController::class, 'store'])->name('kos.store');
     Route::get('/kos/{kos}/edit', [KosController::class, 'edit'])->name('kos.edit');
     Route::put('/kos/{kos}', [KosController::class, 'update'])->name('kos.update');
-    Route::get('/room/{room}/edit', 'RoomController@edit')->name('room.edit');
-    Route::put('/room/{room}', [KosController::class, 'update'])->name('room.update');
+    Route::get('/room/{room}/edit', [RoomController::class, 'edit'])->name('room.edit');
+    Route::put('/room/{room}', [RoomController::class, 'update'])->name('room.update');
 
 });

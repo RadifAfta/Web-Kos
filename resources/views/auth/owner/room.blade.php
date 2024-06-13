@@ -27,7 +27,14 @@
 
                             <div class="form-group mb-3">
                                 <label for="images" class="form-label">{{ __('Gambar') }}</label>
-                                <input type="file" class="form-control" id="images" name="images" accept="image/*">
+                                <input type="file" class="form-control @error('images') is-invalid @enderror" name="images">
+                            
+                                <!-- error message untuk image -->
+                                @error('images')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
                             <div class="form-group mb-3">
