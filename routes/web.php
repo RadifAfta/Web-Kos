@@ -20,6 +20,7 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/owner/dashboard', [DashboardController::class, 'index'])->name('owner.dashboard');
+    Route::delete('/owner/dashboard/room/{room}', [DashboardController::class, 'destroyRoom'])->name('dashboard.room.destroy');
     Route::get('room/create/{kosId}', [RoomController::class, 'create'])->name('room.create');
     Route::post('room/store', [RoomController::class, 'store'])->name('room.store');
     Route::get('kos/create', [KosController::class, 'create'])->name('kos.create');
@@ -28,5 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/kos/{kos}', [KosController::class, 'update'])->name('kos.update');
     Route::get('/room/{room}/edit', [RoomController::class, 'edit'])->name('room.edit');
     Route::put('/room/{room}', [RoomController::class, 'update'])->name('room.update');
-
-});
+    
+    
+    
+    });

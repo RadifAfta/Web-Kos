@@ -126,4 +126,17 @@ class RoomController extends Controller
         return redirect()->route('owner.dashboard')->with('success', 'Kos berhasil diperbarui.');
     }
 
+    public function destroy(Room $room)
+    {
+        // Hapus gambar jika ada
+        if ($room->images) {
+            Storage::delete('public/' . $room->images);
+        }
+
+        // Hapus kamar dari database
+        $room->delete();
+
+        return redirect()->route('owner.dashboard')->with('success', 'Kamar berhasil dihapus.');
+    }
+
 }
